@@ -1,0 +1,16 @@
+name: Feature request
+description: Suggest an improvement for job seekers or contributors.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: Do not include personal or confidential information.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+    validations:
+      required: true

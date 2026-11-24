@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible problem without sharing private data.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Please remove resumes, contact details, tokens, workspace files, and other private information. Use fictional data in examples.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps or command to reproduce
+      description: Include a sanitized error and a public ATS provider or board URL only if relevant.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: OS, Python and Career Radar version
+    validations:
+      required: true

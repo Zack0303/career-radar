@@ -1,150 +1,78 @@
 # Career Radar
 
-**Local-First Official ATS Job Radar & Evidence-Grounded Resume Kit**
+**Track jobs from official company hiring systems, review your fit against your own evidence, and prepare a tailored resume.**
 
-English | [中文](README_ZH.md)
+[中文](README_ZH.md) · [Try the demo](#try-the-offline-demo) · [Use with real jobs](docs/GETTING_STARTED.md) · [Example job card](examples/sample_grounded_job_card.md) · [Contribute](CONTRIBUTING.md)
 
-`Python 3.9+` · `Zero Core Dependencies` · `Local-First` · `MIT License`
+![Four steps: track official jobs, filter changes, review evidence, and prepare a resume.](docs/assets/career-radar-flow.svg)
 
----
+**Python 3.9+** · Core uses the Python standard library · Local-first · [MIT license](LICENSE)
 
-## Why Career Radar?
+Career Radar is an early-stage, command-line tool for job seekers comfortable editing a configuration file. It monitors configured company career boards, records changes locally, and helps prepare applications. You choose the companies, locations, keywords, and evidence; **it does not apply for jobs on your behalf**.
 
-Most job-search tooling falls into two traps: fragile scrapers that hammer aggregated boards, and AI resume tools that invent metrics to sound impressive.
+## What you get
 
-**Career Radar** takes a different approach:
+- **Track:** fetch jobs from supported public SmartRecruiters, Greenhouse, Lever, and Workday endpoints; compare scans in a local SQLite database.
+- **Filter:** select new or updated jobs using location and keyword rules. An incomplete scan cannot mark unseen jobs as closed.
+- **Review:** optionally use your AI assistant and personal evidence files to draft a match. The validator checks evidence IDs, some numeric claims, and output structure; you review the result.
+- **Prepare:** select projects by job-description keywords and generate English and Chinese HTML resumes. PDF export is optional.
 
-1. **Track official ATS endpoints directly**: Pull incremental job changes (`NEW`, `UPDATED`, `UNCHANGED`, `CLOSED`) straight from public **SmartRecruiters**, **Greenhouse**, **Lever**, and **Workday** APIs into local SQLite — with truncation protection so partial scans never falsely close unseen roles.
-2. **Ground every claim in verified evidence**: Maintain one private `master_profile.md` + `project_library.md` with explicit `[Verified]`, `[Self-reported]`, and `[Gap]` boundaries. `apply-match` blocks unknown evidence IDs and ungrounded numeric claims before writing a job card.
-3. **Bring Your Own Agent ($0 extra API cost)**: `scan` exports `scan_digest.json` plus on-demand full JD text so your existing AI coding assistant (Antigravity, Claude Code, Codex) can match jobs using [skills/career-radar-matcher/SKILL.md](skills/career-radar-matcher/SKILL.md) without paying for another LLM API wrapper.
-4. **Tailor clean bilingual resumes deterministically**: Select the top-N relevant projects for a JD without rewriting your facts, and render print-ready A4 **English & Chinese** HTML (or optional ReportLab PDF).
+> **Example · Operations Data Analyst, Guangzhou**
+>
+> Evidence: SQL inventory reporting (`P1`); Python forecasting demo (`P3`)
+>
+> Gap to review: production forecasting experience not demonstrated.
 
----
+The [sample job card](examples/sample_grounded_job_card.md) and [evidence](examples/demo_evidence.md) use fictional data. They show the kind of result you can inspect before sharing; `PASSED` is a limited automated check, not proof that every statement is true.
 
-## Comparison
+## Try the offline demo
 
-| Dimension | Career Radar | Generic Job Scrapers | Typical AI Resume Rewriters |
-| :--- | :--- | :--- | :--- |
-| **Job Source** | Official ATS JSON APIs (`SmartRecruiters` / `Greenhouse` / `Lever` / `Workday`) | Aggregators / brittle HTML scrapers | Manual copy-paste |
-| **Incremental Tracking** | Local SQLite diff + truncation-safe `CLOSED` tracking | Usually CSV dumps | None |
-| **AI Cost Model** | **BYOA** (`$0` extra API fee via existing agent subscription + Skill) | None or paid SaaS | Paid subscription / API key |
-| **Hallucination Guard** | Deterministic `apply-match` blocks ungrounded IDs & numbers | N/A | Often invents percentages and ownership |
-| **Privacy** | `workspace/` & `output/` git-ignored locally | Local or cloud | Uploads CV to third-party servers |
-
----
-
-## Architecture
-
-```mermaid
-flowchart LR
-    subgraph Local["Private Workspace (git-ignored)"]
-        T[targets.json]
-        P[master_profile.md + project_library.md]
-        R[resume.json]
-    end
-
-    subgraph Engine["Career Radar Core (Python 3.9+ Stdlib)"]
-        A[Official ATS Adapters<br/>SmartRecruiters / Greenhouse / Lever / Workday]
-        S[(SQLite Store<br/>NEW / UPDATED / CLOSED)]
-        F[Word-Boundary Filter<br/>+ On-Demand Full JD Fetch]
-        V[apply-match Validator<br/>ID & Numeric Grounding]
-        B[Bilingual Resume Builder<br/>Selector + A4 HTML / Optional PDF]
-    end
-
-    subgraph Output["Local Outputs"]
-        D[scan_digest.json + Job Cards<br/>+ 5-line Recruiter Brief]
-        CV[EN & CN A4 Resumes]
-    end
-
-    T --> A --> S --> F --> D
-    P --> V
-    D -->|BYOA Agent + SKILL.md| V --> D
-    R --> B --> CV
-```
-
----
-
-## 30-Second Quickstart
-
-Try the complete offline pipeline using synthetic fixtures (`0` external packages required):
+Requires Git and Python 3.9 or newer. No account, network access after cloning, or third-party Python packages are needed for the demo.
 
 ```bash
 git clone https://github.com/Zack0303/career-radar.git
 cd career-radar
-
-# 1. Run the 23 automated unit & CLI tests
-PYTHONPATH=src python3 -m unittest discover -s tests -v
-
-# 2. Run the offline end-to-end demo (SQLite diffs, job cards, EN/CN HTML resumes)
 PYTHONPATH=src python3 -m career_radar demo --out output/demo
 ```
 
-> Note: Replace the clone URL with your fork if running via GitHub Actions.
+The command prints a JSON summary. Open `output/demo/jobs/` for fictional job cards and `output/demo/resumes/` for two HTML resumes. Running it again against the same output directory reuses its demo database; delete that **demo output directory** if you want a fresh first-run result.
 
-### Monitor Real Official ATS Boards Locally
+On Windows PowerShell, replace `PYTHONPATH=src` with `$env:PYTHONPATH = "src"` on a separate line, followed by `python -m career_radar ...`.
+
+## Use with real jobs
+
+1. Initialize private working files:
+
+   ```bash
+   PYTHONPATH=src python3 -m career_radar init --dir workspace
+   ```
+
+2. Edit `workspace/targets.json`: replace the example company entries with actual supported ATS boards, and choose your locations and keywords. Fill in the other workspace files only when you are ready to use matching and resume generation.
+3. Scan using **your edited configuration**:
+
+   ```bash
+   PYTHONPATH=src python3 -m career_radar scan \
+     --config workspace/targets.json \
+     --db workspace/career_radar.db \
+     --out output/scan --max-pages 5
+   ```
+
+4. Inspect `output/scan/scan_digest.json`, including its `errors` list, and open the cards in `output/scan/jobs/`. Keep the same database between scans to track changes.
+
+The [step-by-step guide](docs/GETTING_STARTED.md) covers configuration fields, outputs, matching, resume generation, and troubleshooting. Public ATS interfaces vary by company and can change; support for an ATS type is not a guarantee that every company board works.
+
+## What to know before using it
+
+- **Evidence is not automatic fact-checking.** The validator detects unknown evidence IDs, some unsupported numeric tokens, and certain format errors. It does not verify semantic claims, associate every number with a particular evidence ID, or establish whether your sources are true. Review every result.
+- **The AI step is optional and external.** Scanning, rule filtering, and the demo do not require an AI service. Deep matching requires an assistant you choose; its cost and handling of any profile you share depend on that service.
+- **Local-first is not the same as never leaving your computer.** `workspace/`, `output/`, databases, and `.env` are git-ignored by default. Network scans contact the configured employers' services; sharing files with an AI assistant may send data to its provider. Check files before sharing or committing.
+- **Scheduling is a template.** The included GitHub Actions scan runs manually by default; its schedule is disabled and its database is not persisted between runs. It is not yet a reliable cross-run daily change tracker.
+- This is **v0.1**, not an unattended job-application service. A read-only MCP server and headless matching are planned, not included.
+
+## Development and feedback
 
 ```bash
-# 1. Scaffold your private git-ignored workspace/
-PYTHONPATH=src python3 -m career_radar init --dir workspace
-
-# 2. Edit workspace/targets.json (or test with presets/china-mnc-industrial.json)
-PYTHONPATH=src python3 -m career_radar scan \
-  --config presets/china-mnc-industrial.json \
-  --db workspace/career_radar.db \
-  --out output/scan \
-  --max-pages 1
-
-# 3. Inspect active jobs and scan history
-PYTHONPATH=src python3 -m career_radar status --db workspace/career_radar.db
+PYTHONPATH=src python3 -m unittest discover -s tests -v
 ```
 
-### Grounded Job Matching (BYOA) & Bilingual Resume Export
-
-1. Point your AI assistant (Antigravity, Claude Code, or Codex) at [skills/career-radar-matcher/SKILL.md](skills/career-radar-matcher/SKILL.md) to match `output/scan/scan_digest.json` against `workspace/master_profile.md` + `workspace/project_library.md`.
-2. Validate and write the grounded job card (`exit code 2` if any evidence ID or metric is ungrounded):
-
-```bash
-PYTHONPATH=src python3 -m career_radar apply-match \
-  --match-json output/scan/match.json \
-  --profile workspace/master_profile.md \
-  --projects workspace/project_library.md \
-  --out output/scan/jobs/verified-card.md
-```
-
-3. Select top-matching projects for a JD and render A4 bilingual resumes (add `--format pdf` after `pip install "career-radar[pdf]"`):
-
-```bash
-PYTHONPATH=src python3 -m career_radar resume \
-  --resume workspace/resume.json \
-  --out output/resumes \
-  --lang both \
-  --format html \
-  --jd output/scan/jobs/verified-card.md \
-  --max-projects 3
-```
-
----
-
-## Sample Output (`apply-match` Verified Card)
-
-The [example card](examples/sample_grounded_job_card.md) illustrates a fictional operations analyst role using [synthetic evidence](examples/demo_evidence.md) and a [sample match](examples/demo_match.json). Run `apply-match` with your own private evidence to validate a real card.
-
----
-
-## Current Status & Roadmap (v0.1.0)
-
-| Milestone | Status | Scope |
-| :--- | :--- | :--- |
-| **M0 — Offline Core & Templates** | ✅ Done | Domain models, deterministic hash, SQLite diff store, Stage-1 filter, EN/CN HTML resume renderer, `init`/`demo` CLI |
-| **M1 — Live Official ATS Adapters** | ✅ Done | SmartRecruiters, Greenhouse, Lever, Workday HTTP fetchers, isolated `scan_runs` error tracking, `scan`/`status` CLI |
-| **M2 — Grounded Matching (BYOA)** | ✅ Done | Word-boundary matching, on-demand full JD fetch, `apply-match` ID & numeric validator, `career-radar-matcher` Skill |
-| **M3 — Resume Builder & Safe Closing** | ✅ Done | Truncation-safe `FetchBatch` (`CLOSED` guard), deterministic JD project selector, optional ReportLab PDF exporter, `resume` CLI |
-| **M4 — v0.1 Release Packaging** | ✅ Done | MIT `LICENSE`, CI & daily scan GitHub Actions templates, bilingual READMEs, genuine sample card |
-| **v0.2 — Next** | ⏳ Planned | Read-only MCP Server for direct IDE/agent querying, optional headless OpenAI-compatible matcher for CI cron |
-
----
-
-## Privacy & Docs
-
-- **Local-first by design**: `workspace/`, `output/`, `*.db`, and `.env` are excluded in `.gitignore`. No personal profile data or proprietary employer records are stored in the repository.
-- **Project docs**: [docs/PRD.md](docs/PRD.md) · [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [PROGRESS.md](PROGRESS.md) · [CHANGELOG.md](CHANGELOG.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md) to report a problem or contribute, [CHANGELOG.md](CHANGELOG.md) for changes, and [architecture](docs/ARCHITECTURE.md) for implementation details. Please remove private information from reports and examples.

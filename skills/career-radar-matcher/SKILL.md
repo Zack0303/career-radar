@@ -9,7 +9,7 @@ description: >-
 
 # Career Radar Evidence-Grounded Matcher (Approach A / BYOA)
 
-Matches newly scanned official ATS jobs against the candidate's local evidence files without calling external paid LLM APIs, then passes every draft through `career-radar apply-match` to block hallucinated IDs or ungrounded metrics.
+Matches newly scanned official ATS jobs against the candidate's local evidence files without calling external paid LLM APIs, then passes drafts through `career-radar apply-match` to check IDs, some numeric tokens, and required structure. Review every claim: the validator cannot establish semantic support or truth.
 
 ## Workflow
 
@@ -28,32 +28,38 @@ Matches newly scanned official ATS jobs against the candidate's local evidence f
    {
      "company": "Nova Robotics",
      "external_id": "SR-1001",
-     "title": "Industrial AI & Agent Systems Engineer",
-     "location": "Suzhou, China",
+     "title": "Operations Data Analyst",
+     "location": "Guangzhou, China",
      "url": "https://careers.example.com/nova/SR-1001",
      "fit_level": "high",
      "matched_evidence": [
        {
+         "evidence_id": "P1",
+         "level": "self_reported",
+         "claim": "Prepared inventory reports using SQL (P1)."
+       },
+       {
          "evidence_id": "P3",
          "level": "verified",
-         "claim": "Built local retrieval and tool-use workflow with regression tests (P3)."
+         "claim": "Built a Python demand forecasting demo from synthetic data (P3)."
        }
      ],
      "gaps": [
-       "Production Kubernetes scaling not demonstrated."
+       "Production forecasting experience has not been demonstrated."
      ],
      "questions_to_ask": [
-       "Confirm whether the role owns edge deployment or cloud orchestration."
+       "Which inventory and delivery systems does the team use?"
      ],
      "recruiter_brief": {
-       "role": "Industrial AI & Agent Systems Engineer",
+       "role": "Operations Data Analyst",
        "company": "Nova Robotics",
-       "fit_summary": "Strong overlap in data pipelines and grounded agent workflows.",
+       "fit_summary": "SQL and inventory reporting.",
        "evidence_points": [
-         "P3: Retrieval workflow with source citations and regression checks"
+         "P1: SQL reporting",
+         "P3: Python forecasting demo"
        ],
-       "location_availability": "Suzhou / full-time",
-       "open_gaps": "No production Kubernetes deployment claimed; verify team scope."
+       "location_availability": "Guangzhou / full-time",
+       "open_gaps": "No production forecasting experience claimed."
      }
    }
    ```
