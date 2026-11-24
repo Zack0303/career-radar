@@ -1,0 +1,124 @@
+{
+  "en": {
+    "name": "Alex Lin",
+    "title": "Operations Analyst",
+    "contact": "Guangzhou, China · alex.lin.demo@example.com",
+    "availability": "Available full-time · Fictional sample resume",
+    "sections": [
+      "Summary",
+      "Core Skills",
+      "Professional Experience",
+      "Selected Projects",
+      "Education & Languages"
+    ],
+    "summary": "Fictional candidate experienced in supply chain reporting, inventory analysis, and communicating operational findings.",
+    "skills": [
+      [
+        "Analysis",
+        "SQL · Python · Spreadsheets"
+      ],
+      [
+        "Operations",
+        "Inventory planning · Delivery reporting · Forecasting"
+      ]
+    ],
+    "jobs": [
+      {
+        "company": "Harbor Goods (Fictional)",
+        "role": "Operations Analyst · Guangzhou",
+        "date": "2022 - 2025",
+        "bullets": [
+          "Prepared inventory reports and investigated delivery delays.",
+          "Worked with colleagues to document reporting requirements."
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "Demand Forecast Demo (Fictional)",
+        "context": "Synthetic portfolio example",
+        "intro": "Explored a fictional sales dataset to compare simple forecasting methods.",
+        "bullets": [
+          "Built a reproducible Python report from generated data."
+        ]
+      },
+      {
+        "name": "Delivery Delay Analysis (Fictional)",
+        "context": "Synthetic portfolio example",
+        "intro": "Analyzed fictional delivery timestamps using SQL.",
+        "bullets": [
+          "Summarized late deliveries and documented assumptions."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "Southport University (Fictional) · BSc in Business Analytics",
+        "date": "2018 - 2022",
+        "detail": ""
+      }
+    ],
+    "languages": "Languages: Mandarin Chinese (Native) · English (Fluent)"
+  },
+  "cn": {
+    "name": "林明 (Alex Lin)",
+    "title": "运营分析师",
+    "contact": "中国广州 · alex.lin.demo@example.com",
+    "availability": "全职可到岗 · 虚构示例简历",
+    "sections": [
+      "个人简介",
+      "核心技能",
+      "工作经历",
+      "精选项目",
+      "教育背景与语言"
+    ],
+    "summary": "虚构候选人示例，关注供应链报表、库存分析与运营沟通。",
+    "skills": [
+      [
+        "数据分析",
+        "SQL · Python · 电子表格"
+      ],
+      [
+        "运营",
+        "库存计划 · 配送报表 · 需求预测"
+      ]
+    ],
+    "jobs": [
+      {
+        "company": "海港商品（虚构示例）",
+        "role": "运营分析师 · 广州",
+        "date": "2022 - 2025",
+        "bullets": [
+          "制作库存报表并分析配送延误。",
+          "与同事沟通并记录报表需求。"
+        ]
+      }
+    ],
+    "projects": [
+      {
+        "name": "需求预测演示（虚构）",
+        "context": "合成作品集示例",
+        "intro": "使用虚构销售数据比较简单预测方法。",
+        "bullets": [
+          "使用生成的数据制作可复现的 Python 报告。"
+        ]
+      },
+      {
+        "name": "配送延误分析（虚构）",
+        "context": "合成作品集示例",
+        "intro": "使用 SQL 分析虚构的配送时间数据。",
+        "bullets": [
+          "汇总延误情况并记录假设。"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "南港大学（虚构示例） · 商业分析学士",
+        "date": "2018 - 2022",
+        "detail": ""
+      }
+    ],
+    "languages": "语言能力：中文（母语） · 英语（流利工作沟通）"
+  }
+}

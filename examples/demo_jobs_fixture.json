@@ -1,0 +1,42 @@
+[
+  {
+    "company": "Nova Robotics",
+    "provider": "smartrecruiters",
+    "external_id": "SR-1001",
+    "title": "Operations Data Analyst",
+    "location": "Guangzhou, China",
+    "department": "Supply Chain",
+    "url": "https://careers.example.com/nova/SR-1001",
+    "description": "Analyze inventory data and delivery performance using SQL and spreadsheets."
+  },
+  {
+    "company": "Apex MedTech",
+    "provider": "workday",
+    "external_id": "WD-2042",
+    "title": "Supply Chain Data Analyst",
+    "location": "Shenzhen, China",
+    "department": "Operations",
+    "url": "https://careers.example.com/apex/WD-2042",
+    "description": "Build reports using delivery data and collaborate with operations teams."
+  },
+  {
+    "company": "Helios Cloud AI",
+    "provider": "greenhouse",
+    "external_id": "GH-3099",
+    "title": "Operations Data Intern",
+    "location": "Guangzhou, China",
+    "department": "Operations",
+    "url": "https://careers.example.com/helios/GH-3099",
+    "description": "Support fictional inventory reporting."
+  },
+  {
+    "company": "Meridian Data Labs",
+    "provider": "lever",
+    "external_id": "LV-4105",
+    "title": "Logistics Data Analyst",
+    "location": "Remote",
+    "department": "Logistics",
+    "url": "https://careers.example.com/meridian/LV-4105",
+    "description": "Analyze delivery data and communicate findings to operations teams."
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "preset_name": "china-mnc-industrial",
+  "description": "Starter ATS targets for multinational industrial and engineering employers in China.",
+  "verified_in_milestone": "M1-partial",
+  "default_filters": {
+    "locations": [
+      "Guangzhou",
+      "Shenzhen",
+      "Remote"
+    ],
+    "include_keywords": [
+      "Data",
+      "Operations",
+      "Analyst"
+    ],
+    "exclude_keywords": [
+      "Intern",
+      "Trainee"
+    ]
+  },
+  "companies": [
+    {
+      "name": "Bosch China",
+      "ats": "smartrecruiters",
+      "slug": "BoschGroup",
+      "search_text": "China",
+      "enabled": true,
+      "status": "verified_m1"
+    },
+    {
+      "name": "Philips",
+      "ats": "workday",
+      "url": "https://philips.wd3.myworkdayjobs.com/en-US/jobs-and-careers",
+      "search_text": "China",
+      "enabled": true,
+      "status": "verified_m1"
+    },
+    {
+      "name": "ABB",
+      "ats": "workday",
+      "url": "https://abb.wd3.myworkdayjobs.com/External_Career_Page",
+      "search_text": "China",
+      "enabled": true,
+      "status": "verified_m1"
+    },
+    {
+      "name": "Siemens",
+      "ats": "workday",
+      "url": "https://jobs.siemens.com/careers",
+      "enabled": false,
+      "status": "needs_check",
+      "note": "Custom vanity domain; standard myworkdayjobs CXS URL not yet resolved."
+    }
+  ]
+}

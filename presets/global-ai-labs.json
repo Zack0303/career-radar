@@ -1,0 +1,34 @@
+{
+  "preset_name": "global-ai-labs",
+  "description": "Starter ATS targets for global AI labs and developer-tool companies.",
+  "verified_in_milestone": "M1-partial",
+  "default_filters": {
+    "locations": ["Remote", "London", "San Francisco", "Europe"],
+    "include_keywords": ["AI", "Agent", "Eval", "Applied", "Solutions", "Data"],
+    "exclude_keywords": ["Intern", "Recruiter", "Legal"]
+  },
+  "companies": [
+    {
+      "name": "Anthropic",
+      "ats": "greenhouse",
+      "slug": "anthropic",
+      "enabled": true,
+      "status": "verified_m1"
+    },
+    {
+      "name": "Scale AI",
+      "ats": "greenhouse",
+      "slug": "scaleai",
+      "enabled": true,
+      "status": "verified_m1"
+    },
+    {
+      "name": "Mistral AI",
+      "ats": "lever",
+      "slug": "mistral",
+      "enabled": false,
+      "status": "needs_check",
+      "note": "Returned HTTP 404 on api.lever.co during M1 smoke check; ATS provider may have migrated."
+    }
+  ]
+}

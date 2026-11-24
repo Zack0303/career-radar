@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "career-radar"
+version = "0.1.0"
+description = "Local-first official ATS job radar and evidence-grounded bilingual resume kit."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["reportlab>=4.0"]
+llm = ["openai>=1.0"]
+yaml = ["PyYAML>=6.0"]
+mcp = ["mcp>=1.0"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+career-radar = "career_radar.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

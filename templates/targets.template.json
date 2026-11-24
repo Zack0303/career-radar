@@ -1,0 +1,42 @@
+{
+  "locations": [
+    "Guangzhou",
+    "Shenzhen",
+    "Remote"
+  ],
+  "include_keywords": [
+    "Data",
+    "Operations",
+    "Analyst"
+  ],
+  "exclude_keywords": [
+    "Intern",
+    "Internship"
+  ],
+  "companies": [
+    {
+      "name": "Example SmartRecruiters Org",
+      "ats": "smartrecruiters",
+      "slug": "ExampleCompanySlug",
+      "enabled": true
+    },
+    {
+      "name": "Example Greenhouse Org",
+      "ats": "greenhouse",
+      "slug": "exampleboard",
+      "enabled": true
+    },
+    {
+      "name": "Example Lever Org",
+      "ats": "lever",
+      "slug": "exampleco",
+      "enabled": false
+    },
+    {
+      "name": "Example Workday Org",
+      "ats": "workday",
+      "url": "https://example.wd3.myworkdayjobs.com/en-US/Careers",
+      "enabled": false
+    }
+  ]
+}
